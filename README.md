@@ -54,5 +54,14 @@ process.env.PORT para producción en glitch.com
     Utilizar preferentemente clases, constructores de variables let y const y arrow function.
 *   Realizar la prueba de funcionalidad completa en el ámbito local (puerto 8080) y en glitch.com
 
-<sup>Formato: link a un repositorio en Github con los tres proyectos en
+<sup>Formato de entrega: link a un repositorio en Github con los tres proyectos en
 carpetas separadas. No incluir los node_modules.</sup>
+
+# Como ejecutar el proyecto
+- Antes que nada debes tener instalado en tu pc node.js
+- Debes clonar el repositorio
+- Abrir una terminal y en ella dirigirte a la carpeta con el nombre del proyecto
+- Ejecutar el comando ``` npm install ```
+- Una vez finalizado el punto anterior, ejecutar el comando ``` npm run start ```
+- Luego puedes utilizar Postman, insomia o tu programa favorito para testear los diferentes 
+endpoints especificados en **"Aspectos a incluir en el entrgable"** en la seccion de más arriba
