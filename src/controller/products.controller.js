@@ -27,11 +27,11 @@ const getProductById = async (req, res) => {  // Esta funcion devuelve un produc
     try {
         const dbData = await readAndParseFile(dbProducts)                     // Nos traemos la info parseada a JSON de la db
         if (!id) {
-            res.send(dbData)
+            res.status(400).json({ error : 'porfavor ingrese un id' })
         } else {
-            const info = dbData.filter(product => product.id == id)               // Filtramos por ID y lo guardamos en una variable
-            if (info.length !== 0) {                                              // Comprobamos si el array esta vacio o si hay algun elemento y retornamos
-                res.send(info[0])
+            const info = dbData.find(product => product.id == id)             // Buscamos por ID y lo guardamos en una variable
+            if (info) {                                                       // Comprobamos si existe informacion y retornamos
+                res.send(info)
             } else { 
                 res.status(400).json({ error : 'producto no encontrado' })
             }
@@ -56,7 +56,7 @@ const saveProduct = async (req, res) => {        // Guarda un prodcuto nuevo
             try {
                 const dbData = await readAndParseFile(dbProducts)                                         // Nos traemos la info parseada a JSON del archivo leido
                 product.id = prodID()                                                                     // Insertamos el ID en el producto
-                product.timeStamp = Date.now()                                                            // Insertamos la fecha
+                product.timeStamp = Date.now()                                                            // Insertamos el timeStamp
                 dbData.push(product)                                                                      // Pusheamos el producto en el array
                 await fs.promises.writeFile(dbProducts, JSON.stringify(dbData, null, 2), err => {         // Escribimos el archivo
                     if(err) throw err
@@ -82,7 +82,7 @@ const updateProductByID = async (req, res) => {  // Recibe y actualiza un produc
             try {
                 const dbData = await readAndParseFile(dbProducts)
                 let contador = 0
-                for ( let i = 0; i < dbData.length; i++) {                                          // Recorremos el array, en caso que coincidan los ID lo actualizamos
+                for ( let i = 0; i < dbData.length; i++) {                    // Recorremos el array de productos, en caso que coincidan los ID lo actualizamos
                     if (dbData[i].id == id) {
                         dbData[i].name = name
                         dbData[i].price = price
@@ -96,12 +96,12 @@ const updateProductByID = async (req, res) => {  // Recibe y actualiza un produc
                     }
                 }
                 if ( contador != 0 ) {
-                    await fs.promises.writeFile(dbProducts, JSON.stringify(dbData, null, 2), err => {         // Escribimos el archivo
+                    await fs.promises.writeFile(dbProducts, JSON.stringify(dbData, null, 2), err => {    // En caso de encontrar coincidencias escribimos el archivo
                         if(err) throw err
                     })
                     res.status(200).json({ messaje : 'producto actualizado con exito' })
                 } else {
-                    res.status(400).json({ error : 'producto no encontrado' })                      // En caso que no haya coincidencias retornamos el error
+                    res.status(400).json({ error : 'producto no encontrado' })                           // En caso que no haya coincidencias retornamos el error
                 }
             } catch (error) {
                 console.error(`El error es: ${error}`)
@@ -114,15 +114,19 @@ const updateProductByID = async (req, res) => {  // Recibe y actualiza un produc
 
 const deleteProductById = async (req, res) => {   // Esta funcion elimina un producto segun su ID
     if (administrador == true) {
-        const { id } = req.params                                                               // Tomamos el ID
+        const { id } = req.params                                                                       // Tomamos el ID
         try {
             const dbData = await readAndParseFile(dbProducts)
-            const info = dbData.filter(product => product.id != id)                             // Filtramos todos los productos distintos de ese ID
-
-            await fs.promises.writeFile(dbProducts, JSON.stringify(info, null, 2), err => {        // Escribimos la nueva db
-                if(err) throw err
-            })
-            res.status(200).json({ messaje : 'producto borrado con exito' })
+            const pordIndex = dbData.findIndex(product => product.id == id)                             // Buscamos el producto por su id y tomamos el indice del array
+            if ( pordIndex != -1) {                                                                     // Si encuentra 
+                dbData.splice(pordIndex, 1)                                                             // Borra el producto
+                await fs.promises.writeFile(dbProducts, JSON.stringify(dbData, null, 2), err => {       // Escribimos la nueva db
+                    if(err) throw err
+                })
+                res.status(200).json({ messaje : 'producto borrado con exito' })
+            } else {
+                res.status(400).json({ error : 'producto no encontrado' })
+            }
 
         } catch (error) {
             console.error(`El error es: ${error}`)
