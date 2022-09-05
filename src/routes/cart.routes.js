@@ -21,5 +21,3 @@ cartRouter.post('/:id/productos', cartControllers.saveProductInCartByID)
 cartRouter.delete('/:id/productos/:id_prod', cartControllers.deleteProductFromCartByID)
 
 export default cartRouter
-
-// Pregunta a la clase ... Porque son asi las URLS? Estan bien?... como tomo los parametros si se envian asi?

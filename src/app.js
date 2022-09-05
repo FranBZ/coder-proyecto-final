@@ -19,8 +19,4 @@ app.set('port', PORT)
 app.use('/api/productos', productsRouter)
 app.use('/api/carrito', cartRouter)
 
-app.get('/', (req, res) => {
-    res.render('index')
-})
-
 export default app
