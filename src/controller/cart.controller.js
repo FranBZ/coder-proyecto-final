@@ -42,7 +42,7 @@ const deleteCartById = async (req, res) => {   // Esta funcion elimina un carrit
 
     try {
         const dbData = await readAndParseFile(dbCart)
-        const indexCart = dbData.findindex(cart => cart.id == id)                               // Buscamos el carrito por su ID
+        const indexCart = dbData.findIndex(cart => cart.id == id)                               // Buscamos el carrito por su ID
         if (indexCart != -1) {                                                                  // Si existe
             dbData.splice(indexCart, 1)                                                         // Borramos el carrito
             await fs.promises.writeFile(dbCart, JSON.stringify(dbData, null, 2), err => {       // Reescribimos la base de datos
@@ -79,7 +79,7 @@ const saveProductInCartByID = async (req, res) => { // Esta funcion guarda un pr
 
     try {
         const dbDataCart = await readAndParseFile(dbCart)
-        const cartIndex = dbData.findindex(cart => cart.id == id)       // Buscamos el carrito por su ID
+        const cartIndex = dbDataCart.findIndex(cart => cart.id == id)   // Buscamos el carrito por su ID
         if (cartIndex != -1) {                                          // Si encuentra un carrito que proceda a buscar y cargar los productos
             const dbDataProducts = await readAndParseFile(dbProducts)
             const infoProducts = []
@@ -118,7 +118,7 @@ const deleteProductFromCartByID = async (req, res) => { // Esta funcion borro un
         const dbDataCart = await readAndParseFile(dbCart)
         const cartInfo = dbDataCart.find( cart => cart.id == id )                                   // Buscamos el carrito por ID
         if (cartInfo) {                                                                             // En caso de encontrarlo
-            const prodIndex = cartInfo.products.findindex(product => product.id == id_prod)         // Buscamos el indice del producto en el array
+            const prodIndex = cartInfo.products.findIndex(product => product.id == id_prod)         // Buscamos el indice del producto en el array
             if (prodIndex != -1) {                                                                  // En caso de encontra run producto lo borramos
                 cartInfo.products.splice(prodIndex, 1)
                 await fs.promises.writeFile(dbCart, JSON.stringify(dbDataCart, null, 2), err => {   // Reescribimos la base de datos
