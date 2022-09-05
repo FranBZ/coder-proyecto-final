@@ -91,7 +91,8 @@ const saveProductInCartByID = async (req, res) => { // Esta funcion guarda un pr
             if (infoProducts.length != 0) {                             // Si existen productos en el array procedemos a cargar el carrito
                 for (let cart = 0; cart < dbDataCart.length; i ++) {
                     if (dbDataCart[cart].id == id) {
-                        dbDataCart[cart].products.concat(infoProducts)
+                        let union = dbDataCart[cart].products.concat(infoProducts)
+                        dbDataCart[cart].products = union
                         break
                     }
                 }
