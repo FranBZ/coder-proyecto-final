@@ -82,15 +82,15 @@ const updateProductByID = async (req, res) => {  // Recibe y actualiza un produc
             try {
                 const dbData = await readAndParseFile(dbProducts)
                 let contador = 0
-                for ( let i = 0; i < dbData.length; i++) {                    // Recorremos el array de productos, en caso que coincidan los ID lo actualizamos
-                    if (dbData[i].id == id) {
-                        dbData[i].name = name
-                        dbData[i].price = price
-                        dbData[i].urlImage = urlImage
-                        dbData[i].description = description
-                        dbData[i].code = code
-                        dbData[i].stock = stock
-                        dbData[i].timeStamp = Date.now()
+                for ( let prod = 0; prod < dbData.length; prod++) {                    // Recorremos el array de productos, en caso que coincidan los ID lo actualizamos
+                    if (dbData[prod].id == id) {
+                        dbData[prod].name = name
+                        dbData[prod].price = price
+                        dbData[prod].urlImage = urlImage
+                        dbData[prod].description = description
+                        dbData[prod].code = code
+                        dbData[prod].stock = stock
+                        dbData[prod].timeStamp = Date.now()
                         contador += 1
                         break
                     }

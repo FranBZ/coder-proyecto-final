@@ -88,14 +88,9 @@ const saveProductInCartByID = async (req, res) => { // Esta funcion guarda un pr
                     if (product.id == id) infoProducts.push(product)
                 })  
             })
-            if (infoProducts.length != 0) {                             // Si existen productos en el array procedemos a cargar el carrito
-                for (let cart = 0; cart < dbDataCart.length; i ++) {
-                    if (dbDataCart[cart].id == id) {
-                        let union = dbDataCart[cart].products.concat(infoProducts)
-                        dbDataCart[cart].products = union
-                        break
-                    }
-                }
+            if (infoProducts.length != 0) {                                       // Si existen productos en el array procedemos a cargar el carrito
+                let union = dbDataCart[cartIndex].products.concat(infoProducts)   
+                dbDataCart[cartIndex].products = union
                 await fs.promises.writeFile(dbCart, JSON.stringify(dbDataCart, null, 2), err => {   // Reescribimos la base de datos
                     if(err) throw err
                 })
@@ -111,7 +106,7 @@ const saveProductInCartByID = async (req, res) => { // Esta funcion guarda un pr
     }
 }
 
-const deleteProductFromCartByID = async (req, res) => { // Esta funcion borro un producto de un carrito
+const deleteProductFromCartByID = async (req, res) => { // Esta funcion borra un producto de un carrito
 
     const { id , id_prod } = req.params
 
