@@ -27,7 +27,7 @@ const getProductById = async (req, res) => {  // Esta funcion devuelve un produc
     try {
         const dbData = await readAndParseFile(dbProducts)                     // Nos traemos la info parseada a JSON de la db
         if (!id) {
-            res.status(400).json({ error : 'porfavor ingrese un id' })
+            res.send(dbData)                                                  // en caso de no pasar id devolvemos todos los productos
         } else {
             const info = dbData.find(product => product.id == id)             // Buscamos por ID y lo guardamos en una variable
             if (info) {                                                       // Comprobamos si existe informacion y retornamos
