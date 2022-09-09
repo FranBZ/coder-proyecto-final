@@ -58,6 +58,7 @@ process.env.PORT para producción en glitch.com
 carpetas separadas. No incluir los node_modules.</sup>
 
 # Como ejecutar el proyecto
+### En tu pc
 - Antes que nada debes tener instalado en tu pc node.js
 - Debes clonar el repositorio
 - Abrir una terminal y en ella dirigirte a la carpeta con el nombre del proyecto
@@ -65,3 +66,10 @@ carpetas separadas. No incluir los node_modules.</sup>
 - Una vez finalizado el punto anterior, ejecutar el comando ``` npm run start ```
 - Luego puedes utilizar Postman, insomia o tu programa favorito para testear los diferentes 
 endpoints especificados en **"Aspectos a incluir en el entrgable"** en la seccion de más arriba
+
+### En Glitch
+[APP en Glitch](https://glitch.com/edit/#!/magnetic-aback-monkey)
+- Abrir una terminal
+- Ejecutar el comando ``` npm run start ```
+- Una vez finalizado el punto anterior utilizar las diferentes rutas especificadas
+en **"Aspectos a incluir en el entrgable"** en la seccion de más arriba
